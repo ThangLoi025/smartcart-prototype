@@ -1,0 +1,13 @@
+export const MAX_CART_WEIGHT_LBS = 50.0;
+
+export enum ViewState {
+  WELCOME = 'WELCOME',
+  MEMBER_DASHBOARD = 'MEMBER_DASHBOARD',
+  SCANNER = 'SCANNER',
+  MAP = 'MAP',
+}
+
+export const HARDWARE_DELAYS = {
+  SCANNER: 800,
+  WEIGHT_SCALE: 1500,
+};

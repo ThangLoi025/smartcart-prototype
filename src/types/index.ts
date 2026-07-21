@@ -11,6 +11,8 @@ export interface Voucher {
 export interface User {
   id: string;
   name: string;
+  email?: string;
+  password?: string;
   phone: string;
   membershipLevel: 'ĐỒNG' | 'BẠC' | 'VÀNG' | 'KIM CƯƠNG';
   status: 'ACTIVE' | 'INACTIVE';

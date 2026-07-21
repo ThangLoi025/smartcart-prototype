@@ -4,26 +4,29 @@ export const mockProducts: Product[] = [
   {
     id: 'p1',
     barcode: '00000000001',
-    name: 'Chuối hữu cơ (Nải)',
-    price: 50000, // 50,000 VND
-    weight: 2.5, // 2.5 lbs
-    location_coords: [{ x: 10, y: 20 }]
+    name: 'Mì Ý Buitoni, Gói 500g',
+    price: 55000, // 55,000 VND
+    weight: 1.1, // ~500g -> ~1.1 lbs
+    location_coords: [{ x: 10, y: 20 }],
+    imageUrl: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=150&h=150&fit=crop'
   },
   {
     id: 'p2',
     barcode: '00000000002',
-    name: 'Sữa tươi nguyên kem 1 Gallon',
-    price: 90000, // 90,000 VND
-    weight: 8.6, // 8.6 lbs (approx 1 gallon of milk)
-    location_coords: [{ x: 5, y: 15 }]
+    name: 'Phô mai lát Daiya, Hộp 200g',
+    price: 120000, // 120,000 VND
+    weight: 0.5, // ~200g
+    location_coords: [{ x: 5, y: 15 }],
+    imageUrl: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=150&h=150&fit=crop'
   },
   {
     id: 'p3',
     barcode: '00000000003',
-    name: 'Bánh mì men tự nhiên',
-    price: 40000, // 40,000 VND
-    weight: 1.0, // 1 lb
-    location_coords: [{ x: 15, y: 25 }]
+    name: 'Snack khoai tây Ruffles vị Phô mai',
+    price: 35000, // 35,000 VND
+    weight: 0.4, // ~150g
+    location_coords: [{ x: 15, y: 25 }],
+    imageUrl: 'https://images.unsplash.com/photo-1600952841320-db92ec4047ca?w=150&h=150&fit=crop'
   },
   {
     id: 'p4',
@@ -31,7 +34,8 @@ export const mockProducts: Product[] = [
     name: 'Sản phẩm siêu nặng (Thử nghiệm)',
     price: 500000, // 500,000 VND
     weight: 40.0, // 40 lbs
-    location_coords: [{ x: 1, y: 1 }]
+    location_coords: [{ x: 1, y: 1 }],
+    imageUrl: ''
   }
 ];
 

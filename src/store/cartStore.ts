@@ -12,13 +12,15 @@ interface CartState {
   clearSession: () => void;
 }
 
+import { mockProducts } from '@/lib/mockData';
+
 const initialSession: CartSession = {
   sessionId: '',
   status: 'GUEST',
   userId: null,
-  items: [],
-  totalAmount: 0,
-  totalWeight: 0,
+  items: [mockProducts[0], mockProducts[1]],
+  totalAmount: mockProducts[0].price + mockProducts[1].price,
+  totalWeight: mockProducts[0].weight + mockProducts[1].weight,
 };
 
 export const useCartStore = create<CartState>((set, get) => ({

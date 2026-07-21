@@ -2,18 +2,14 @@
 
 import { useState } from 'react';
 import { useCartStore } from '@/store/cartStore';
-import { useUIStore } from '@/store/uiStore';
-import { ViewState } from '@/lib/constants';
 import Button from '@/components/ui/Button';
 import { MAX_CART_WEIGHT_LBS } from '@/lib/constants';
-import { CreditCard, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
+import CheckoutModal from './CheckoutModal';
 
 export default function CartSummary() {
-  const { session, clearSession } = useCartStore();
-  const { setActiveView } = useUIStore();
-  
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [checkoutResult, setCheckoutResult] = useState<'success' | 'error' | null>(null);
+  const { session } = useCartStore();
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
 
   const formattedTotal = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
@@ -22,31 +18,6 @@ export default function CartSummary() {
 
   const weightPercentage = Math.min((session.totalWeight / MAX_CART_WEIGHT_LBS) * 100, 100);
   const isNearLimit = session.totalWeight > MAX_CART_WEIGHT_LBS * 0.9;
-
-  const handleCheckout = async () => {
-    setIsCheckingOut(true);
-    setCheckoutResult(null);
-
-    // Simulate network and payment processing delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Simulate outcome: 50% chance of success for testing both cases
-    const isSuccess = Math.random() > 0.5;
-
-    if (isSuccess) {
-      setCheckoutResult('success');
-      // Wait 3 seconds to show success state before clearing and redirecting
-      setTimeout(() => {
-        setCheckoutResult(null);
-        setIsCheckingOut(false);
-        clearSession();
-        setActiveView(ViewState.WELCOME);
-      }, 3000);
-    } else {
-      setCheckoutResult('error');
-      setIsCheckingOut(false);
-    }
-  };
 
   return (
     <div className="space-y-4">
@@ -85,46 +56,22 @@ export default function CartSummary() {
           <span className="text-2xl font-bold text-slate-900">{formattedTotal}</span>
         </div>
 
-        {checkoutResult === 'error' && (
-          <div className="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-start gap-2 animate-in fade-in slide-in-from-bottom-2">
-            <XCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
-            <div className="text-sm">
-              <p className="font-semibold text-rose-700">Thanh toán thất bại</p>
-              <p className="text-rose-600">Thẻ của bạn bị từ chối hoặc có lỗi mạng. Vui lòng thử lại.</p>
-            </div>
-          </div>
-        )}
-
-        {checkoutResult === 'success' && (
-          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-start gap-2 animate-in fade-in slide-in-from-bottom-2">
-            <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
-            <div className="text-sm">
-              <p className="font-semibold text-green-700">Thanh toán thành công!</p>
-              <p className="text-green-600">Cảm ơn bạn đã mua sắm. Đang quay lại trang chủ...</p>
-            </div>
-          </div>
-        )}
-        
         <Button 
-          className={`w-full text-lg transition-all ${
-            checkoutResult === 'success' 
-              ? 'bg-green-700 pointer-events-none' 
-              : 'shadow-[0_4px_14px_0_rgba(22,163,74,0.39)] hover:shadow-[0_6px_20px_rgba(22,163,74,0.23)] hover:-translate-y-0.5'
-          }`}
+          className="w-full text-lg transition-all shadow-[0_4px_14px_0_rgba(22,163,74,0.39)] hover:shadow-[0_6px_20px_rgba(22,163,74,0.23)] hover:-translate-y-0.5"
           size="lg"
-          disabled={session.items.length === 0 || isCheckingOut || checkoutResult === 'success'}
-          onClick={handleCheckout}
+          disabled={session.items.length === 0}
+          onClick={() => setIsCheckoutModalOpen(true)}
         >
-          {isCheckingOut ? (
-            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-          ) : checkoutResult === 'success' ? (
-            <CheckCircle2 className="w-5 h-5 mr-2" />
-          ) : (
-            <CreditCard className="w-5 h-5 mr-2" />
-          )}
-          {isCheckingOut ? 'Đang xử lý...' : checkoutResult === 'success' ? 'Thành công' : 'Thanh toán'}
+          <CreditCard className="w-5 h-5 mr-2" />
+          Thanh toán
         </Button>
       </div>
+
+      <CheckoutModal 
+        isOpen={isCheckoutModalOpen}
+        onClose={() => setIsCheckoutModalOpen(false)}
+        totalAmount={session.totalAmount}
+      />
     </div>
   );
 }

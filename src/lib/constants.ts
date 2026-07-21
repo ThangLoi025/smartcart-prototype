@@ -2,6 +2,7 @@ export const MAX_CART_WEIGHT_LBS = 50.0;
 
 export enum ViewState {
   WELCOME = 'WELCOME',
+  AUTH = 'AUTH',
   MEMBER_DASHBOARD = 'MEMBER_DASHBOARD',
   SCANNER = 'SCANNER',
   MAP = 'MAP',

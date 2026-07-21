@@ -3,10 +3,12 @@
 import { useCartStore } from '@/store/cartStore';
 import CartItem from './CartItem';
 import CartSummary from './CartSummary';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, ScanLine } from 'lucide-react';
+import { useUIStore } from '@/store/uiStore';
 
 export default function CartSidebar() {
   const { session } = useCartStore();
+  const { setScannerModalOpen } = useUIStore();
   const { items, status } = session;
 
   return (
@@ -38,6 +40,13 @@ export default function CartSidebar() {
             <ShoppingCart className="w-16 h-16 opacity-20" />
             <p className="text-slate-600">Giỏ hàng của bạn đang trống.</p>
             <p className="text-sm text-slate-500 text-center px-4">Quét sản phẩm để bắt đầu mua sắm.</p>
+            <button 
+              onClick={() => setScannerModalOpen(true)}
+              className="mt-4 flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors"
+            >
+              <ScanLine className="w-5 h-5" />
+              Quét mã ngay
+            </button>
           </div>
         ) : (
           items.map((item, index) => (
@@ -48,6 +57,15 @@ export default function CartSidebar() {
 
       {/* Footer Summary */}
       <div className="p-4 border-t border-slate-200 bg-slate-50">
+        {items.length > 0 && (
+          <button 
+            onClick={() => setScannerModalOpen(true)}
+            className="w-full mb-4 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl font-medium border border-slate-200 transition-colors"
+          >
+            <ScanLine className="w-5 h-5" />
+            Quét thêm sản phẩm
+          </button>
+        )}
         <CartSummary />
       </div>
     </div>

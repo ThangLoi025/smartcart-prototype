@@ -17,21 +17,29 @@ export default function CartItem({ item }: Props) {
   }).format(item.price);
 
   return (
-    <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200 hover:border-green-300 hover:shadow-sm transition-all group">
-      <div className="flex-1 min-w-0">
-        <h3 className="text-sm font-medium text-slate-900 truncate">{item.name}</h3>
-        <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
-          <span>{item.weight.toFixed(1)} lbs</span>
+    <div className="flex items-start p-4 bg-white group hover:bg-slate-50 transition-colors">
+      <div className="w-12 h-12 bg-slate-100 rounded mr-4 flex-shrink-0 flex items-center justify-center overflow-hidden border border-slate-200">
+        {item.imageUrl ? (
+          <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
+        ) : (
+          <div className="text-xs text-slate-400">Ảnh</div>
+        )}
+      </div>
+      
+      <div className="flex-1 min-w-0 pr-4">
+        <h3 className="text-sm font-semibold text-slate-800 leading-snug">{item.name}</h3>
+        <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-500 font-medium">
+          <span>{formattedPrice} / cái</span>
           <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-          <span>{item.barcode}</span>
+          <span>SL: 1</span>
         </div>
       </div>
       
-      <div className="flex items-center gap-4 ml-4">
-        <span className="text-green-600 font-semibold">{formattedPrice}</span>
+      <div className="flex flex-col items-end justify-between h-full">
+        <span className="text-sm font-bold text-slate-900">{formattedPrice}</span>
         <button
           onClick={() => removeItem(item.id)}
-          className="text-slate-400 hover:text-rose-500 transition-colors p-1"
+          className="text-slate-300 hover:text-rose-500 transition-colors p-1 mt-2 opacity-0 group-hover:opacity-100"
           aria-label="Xóa sản phẩm"
         >
           <Trash2 className="w-4 h-4" />
